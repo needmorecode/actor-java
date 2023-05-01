@@ -141,7 +141,6 @@ public class ActorSystem {
             clientBootstrap = new Bootstrap();
             clientBootstrap.group(group)
              .channel(NioSocketChannel.class)
-             .option(ChannelOption.SO_BACKLOG, 100)
              .handler(new LoggingHandler(LogLevel.INFO))
              .option(ChannelOption.TCP_NODELAY, true)
              .handler(new ChannelInitializer<SocketChannel>() {
