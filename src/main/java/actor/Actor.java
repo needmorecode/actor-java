@@ -39,6 +39,7 @@ public abstract class Actor {
                 try {
                     Message message = mailbox.take();
                     try {
+                    	System.out.println(message.toString());  // 日志打印
                     	handleMessage(message);
                     } catch (Exception e) {
                     	e.printStackTrace();

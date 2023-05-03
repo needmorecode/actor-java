@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import io.netty.util.internal.logging.FormattingTuple;
+import io.netty.util.internal.logging.MessageFormatter;
+
 /**
  * Actor之间发送的消息
  * 多个节点之间发送消息，会被序列化
@@ -11,6 +14,8 @@ import java.util.List;
 public class Message implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private static final String LOG_FORMAT = "[time:{}, srcActor:{}, destActor:{}]command:{},params:{}";
 
 	private String command;
 	
@@ -55,6 +60,11 @@ public class Message implements Serializable {
 
 	public Object[] getParams() {
 		return params;
+	}
+	
+	public String toString() {
+		FormattingTuple tuple = MessageFormatter.arrayFormat(LOG_FORMAT, new Object[] {ActorSystem.currTimestamp(), srcActor, destActor, command, params});
+		return tuple.getMessage();
 	}
 	
 	

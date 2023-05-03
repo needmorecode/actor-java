@@ -32,7 +32,8 @@ public class ActorPing extends Actor {
 	 * Actor启动
 	 */
 	private void start(Message msg) {
-		System.out.println("receive:" + msg.getParams()[0]);
+		//System.out.println(System.currentTimeMillis() - ActorSystem.startTime);
+		//System.out.println("start:" + msg.getParams()[0]);
 		ActorSystem.sendSelf("ping", msg.getParams());
 	}
 	
@@ -41,7 +42,8 @@ public class ActorPing extends Actor {
 	 */
 	private void ping(Message msg) {
 		int interval = (int)msg.getParams()[0];
-		System.out.println("ping " + interval);
+		//System.out.println(System.currentTimeMillis() - ActorSystem.startTime);
+		//System.out.println("ping:" + interval);
 		ActorSystem.send("nodeB", "pong", "pong", "msg");
 		ActorSystem.sleep(interval, "ping", msg.getParams());
 	}
@@ -50,7 +52,8 @@ public class ActorPing extends Actor {
 	 * 接收反弹消息
 	 */
 	private void receivePong(Message msg) {
-		System.out.println("receivePong" + msg.getParams()[0]);
+		//System.out.println(System.currentTimeMillis() - ActorSystem.startTime);
+		//System.out.println("receivePong:" + msg.getParams()[0]);
 	}
 	
 }

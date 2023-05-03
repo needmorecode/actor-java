@@ -39,6 +39,7 @@ public class Timer {
 		}
 		TimerTask firstTask = timerTasks.peek();
 		timerTasks.offer(task);
+		System.out.println(task.toString() + "addTask");
 		if (firstTask != null && task.getExecTime() < firstTask.getExecTime()) {
 			hasCurrTask.signal();
 		}
@@ -52,7 +53,8 @@ public class Timer {
 		Executor executor = Executors.newSingleThreadExecutor();
 		executor.execute(() -> {
 			while (true) {
-				TimerTask firstTask;
+				TimerTask firstTask = null;
+				TimerTask execTask = null;
 				lock.lock();
 				if (timerTasks.isEmpty()) {
 					try {
@@ -72,11 +74,12 @@ public class Timer {
 						// ignore
 					}
 	    	   	} else {
-	    	   		firstTask = timerTasks.poll();
+	    	   		execTask = timerTasks.poll();
 	    	   	}
 	    	   	lock.unlock();
-	    	   	if (firstTask != null) {
-	    	   		firstTask.run();
+	    	   	if (execTask != null) {
+	    	   		System.out.println(execTask.toString() + "execTask");
+	    	   		execTask.run();
 	    	   	}
 			}
 		});

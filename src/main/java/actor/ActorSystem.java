@@ -32,6 +32,8 @@ import io.netty.handler.logging.LoggingHandler;
  */
 public class ActorSystem {
 	
+	private static long startTime;
+	
 	private static Map<String, InetSocketAddress> clusterConfig;
 	
 	/**
@@ -55,6 +57,13 @@ public class ActorSystem {
 	 * 维护节点与通道的对应关系
 	 */
 	private final static Map<String, Channel> channels = new ConcurrentHashMap<>();
+	
+	/**
+	 * 获取程序启动到当前时间的时间戳
+	 */
+	public static long currTimestamp() {
+		return System.currentTimeMillis() - startTime;
+	}
 	
 	public static void send(Message msg) {
 		String destNodeName = msg.getDestNode();
@@ -106,7 +115,7 @@ public class ActorSystem {
 		return channel != null && channel.isActive() && channel.isWritable();
 	}
 	
-	public static Channel getChannel(String destNodeName) {
+	public static Channel getChannel(String destNodeName) { 
 		return channels.get(destNodeName);
 	}
 	
@@ -162,6 +171,7 @@ public class ActorSystem {
 		Timer.start();
 		// 启动Netty bootstrap
 		startNettyBootstrap();
+		startTime = System.currentTimeMillis();
 	}
 	
 	/**

@@ -26,7 +26,7 @@ public class ActorPong extends Actor {
 	 * 消息反弹
 	 */
 	private void pong(Message msg) {
-		System.out.println("pong" + msg.getParams()[0]);
+		//System.out.println("pong:" + msg.getParams()[0]);
 		ActorSystem.send(msg.getSrcNode(), msg.getSrcActor(), "receivePong", msg.getParams());
 	}
 	
